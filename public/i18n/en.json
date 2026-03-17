@@ -1,0 +1,29 @@
+{
+  "LOGIN": {
+    "WELCOME": "Welcome",
+    "SUBTITLE": "Enter your credentials to log in",
+    "USERNAME_OR_EMAIL": "Username or email",
+    "PASSWORD": "Password",
+    "ENTER": "Enter",
+    "REMEMBER_ME": "Remember me",
+    "FORGOT_PASSWORD": "Forgot your password?",
+    "LOGIN_BUTTON": "Log in",
+    "HERO_TITLE": "Optimize the efficiency of your clinical laboratory"
+  },
+  "SIDEBAR": {
+    "PATIENTS": "Patients",
+    "ORDERS": "Orders",
+    "RESULTS": "Results",
+    "OTHERS": "Others",
+    "NOTIFICATIONS": "Notifications",
+    "INBOX": "Inbox",
+    "SETTINGS": "Settings",
+    "ROLES": {
+      "1": "Doctor",
+      "2": "Laboratory",
+      "3": "Admin",
+      "4": "Patient",
+      "5": "Support"
+    }
+  }
+}

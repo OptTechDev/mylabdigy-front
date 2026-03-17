@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { Sidebar } from './views/common/layout/sidebar/sidebar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,11 @@ import { Sidebar } from './views/common/layout/sidebar/sidebar';
 })
 export class App {
   protected readonly title = signal('mylabdigy');
+  private translate = inject(TranslateService);
+
+  constructor() {
+    this.translate.addLangs(['en', 'es']);
+    this.translate.use('es');
+  }
 }
+

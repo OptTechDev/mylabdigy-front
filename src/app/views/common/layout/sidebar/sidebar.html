@@ -1,1 +1,115 @@
-<p>sidebar works!</p>
+@if (isVisible) {
+<aside
+    [ngClass]="['flex flex-col h-screen shrink-0 transition-all duration-300 relative text-white bg-gradient-to-b shadow-xl overflow-hidden', themeClass, isCollapsed ? 'w-20' : 'w-[260px]']"
+    style="border-top-right-radius: 1.5rem; border-bottom-right-radius: 1.5rem;">
+
+    <!-- Toggle Button -->
+    <div class="absolute -right-3 top-[55%] transform -translate-y-1/2 z-50">
+        <button (click)="toggleCollapse()"
+            class="bg-white text-gray-700 border border-gray-100 rounded-md w-6 h-8 flex items-center justify-center shadow-md cursor-pointer hover:bg-gray-50 transition-colors">
+            <i class="pi mr-2" [ngClass]="isCollapsed ? 'pi-chevron-right' : 'pi-chevron-left'"
+                style="font-size: 0.7rem;"></i>
+        </button>
+    </div>
+
+    <!-- Header Section -->
+    <div class="p-4 mt-4 flex items-center justify-between" [ngClass]="isCollapsed ? 'flex-col gap-4' : 'gap-2'">
+
+        <!-- User Pill -->
+        <div class="flex items-center justify-between rounded-[2rem] bg-white/20 p-1 transition-all relative w-full"
+            [ngClass]="isCollapsed ? 'flex-col p-2' : ''">
+
+            <div class="flex items-center gap-2 overflow-hidden"
+                [ngClass]="isCollapsed ? 'flex-col justify-center' : 'pl-1'">
+                <!-- Avatar placeholder -->
+                <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center overflow-hidden shrink-0">
+                    <img src="https://i.pravatar.cc/150?img=11" alt="avatar" class="w-full h-full object-cover">
+                </div>
+
+                <div *ngIf="!isCollapsed" class="flex flex-col">
+                    <span class="font-bold text-[13px] leading-tight truncate w-full pr-1">{{ userName }}</span>
+                    <span class="text-[11px] opacity-90 truncate w-full">{{ userRoleName }}</span>
+                </div>
+            </div>
+
+            <!-- Dots -->
+            <button
+                class="text-white bg-transparent border-none cursor-pointer flex items-center justify-center p-2 rounded-full hover:bg-white/20 transition-colors shrink-0">
+                <i class="pi pi-ellipsis-h text-sm"></i>
+            </button>
+        </div>
+
+        <!-- Dashboard/Grid Icon -->
+        <button
+            class="text-white bg-transparent border-none cursor-pointer flex items-center justify-center p-2 rounded-lg hover:bg-white/20 transition-colors shrink-0">
+            <i class="pi pi-th-large text-xl"></i>
+        </button>
+    </div>
+
+    <div class="px-5 w-full">
+        <div class="h-px w-full bg-white/20 my-2"></div>
+    </div>
+
+    <!-- Menu Items Top -->
+    <div class="flex flex-col gap-2 px-3 overflow-y-auto flex-1 custom-scrollbar pb-4">
+        <a routerLink="/medico/pacientes"
+            class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Pacientes" tooltipPosition="right"
+            [tooltipDisabled]="!isCollapsed">
+            <i class="pi pi-users text-lg"></i>
+            <span *ngIf="!isCollapsed">Pacientes</span>
+        </a>
+        <a routerLink="/medico/ordenes"
+            class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Ordenes" tooltipPosition="right"
+            [tooltipDisabled]="!isCollapsed">
+            <i class="pi pi-file text-lg"></i>
+            <span *ngIf="!isCollapsed">Ordenes</span>
+        </a>
+        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Resultados" tooltipPosition="right"
+            [tooltipDisabled]="!isCollapsed">
+            <i class="pi pi-clipboard text-lg"></i>
+            <span *ngIf="!isCollapsed">Resultados</span>
+        </a>
+
+        <div class="px-2 w-full mt-2">
+            <div class="h-px w-full bg-white/20 my-3"></div>
+        </div>
+
+        <div class="px-3 mb-2 text-white/70 text-xs font-semibold uppercase tracking-wider"
+            [ngClass]="isCollapsed ? 'text-center' : ''">
+            <span *ngIf="!isCollapsed">Otros</span>
+            <span *ngIf="isCollapsed">...</span>
+        </div>
+
+        <!-- Menu Items Bottom -->
+        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Notificaciones" tooltipPosition="right"
+            [tooltipDisabled]="!isCollapsed">
+            <i class="pi pi-bell text-lg"></i>
+            <span *ngIf="!isCollapsed">Notificaciones</span>
+        </a>
+        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Bandeja de entrada" tooltipPosition="right"
+            [tooltipDisabled]="!isCollapsed">
+            <i class="pi pi-envelope text-lg"></i>
+            <span *ngIf="!isCollapsed">Bandeja de entrada</span>
+        </a>
+        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Configuraciones" tooltipPosition="right"
+            [tooltipDisabled]="!isCollapsed">
+            <i class="pi pi-cog text-lg"></i>
+            <span *ngIf="!isCollapsed">Configuraciones</span>
+        </a>
+    </div>
+
+    <!-- Bottom Logo -->
+    <div class="p-6 flex flex-col items-center justify-center min-h-[80px]" *ngIf="!isCollapsed">
+        <div class="flex items-center font-bold text-2xl tracking-tighter text-white">
+            <i class="pi pi-desktop text-2xl mr-2"></i>
+            MyLabDigi
+        </div>
+    </div>
+</aside>
+}

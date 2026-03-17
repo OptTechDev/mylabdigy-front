@@ -5,11 +5,10 @@
 
     <!-- Toggle Button -->
     <div class="absolute -right-3 top-[55%] transform -translate-y-1/2 z-50">
-        <button (click)="toggleCollapse()"
-            class="bg-white text-gray-700 border border-gray-100 rounded-md w-6 h-8 flex items-center justify-center shadow-md cursor-pointer hover:bg-gray-50 transition-colors">
+        <p-button (click)="toggleCollapse()" severity="info">
             <i class="pi mr-2" [ngClass]="isCollapsed ? 'pi-chevron-right' : 'pi-chevron-left'"
                 style="font-size: 0.7rem;"></i>
-        </button>
+        </p-button>
     </div>
 
     <!-- Header Section -->
@@ -26,10 +25,12 @@
                     <img src="https://i.pravatar.cc/150?img=11" alt="avatar" class="w-full h-full object-cover">
                 </div>
 
-                <div *ngIf="!isCollapsed" class="flex flex-col">
-                    <span class="font-bold text-[13px] leading-tight truncate w-full pr-1">{{ userName }}</span>
-                    <span class="text-[11px] opacity-90 truncate w-full">{{ userRoleName }}</span>
-                </div>
+                @if (!isCollapsed) {
+                    <div class="flex flex-col">
+                        <span class="font-bold text-[13px] leading-tight truncate w-full pr-1">{{ userName }}</span>
+                        <span class="text-[11px] opacity-90 truncate w-full">{{ userRoleName }}</span>
+                    </div>
+                }
             </div>
 
             <!-- Dots -->
@@ -50,58 +51,19 @@
         <div class="h-px w-full bg-white/20 my-2"></div>
     </div>
 
-    <!-- Menu Items Top -->
+    <!-- Menu Items -->
     <div class="flex flex-col gap-2 px-3 overflow-y-auto flex-1 custom-scrollbar pb-4">
-        <a routerLink="/medico/pacientes"
-            class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
-            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Pacientes" tooltipPosition="right"
-            [tooltipDisabled]="!isCollapsed">
-            <i class="pi pi-users text-lg"></i>
-            <span *ngIf="!isCollapsed">Pacientes</span>
-        </a>
-        <a routerLink="/medico/ordenes"
-            class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
-            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Ordenes" tooltipPosition="right"
-            [tooltipDisabled]="!isCollapsed">
-            <i class="pi pi-file text-lg"></i>
-            <span *ngIf="!isCollapsed">Ordenes</span>
-        </a>
-        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
-            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Resultados" tooltipPosition="right"
-            [tooltipDisabled]="!isCollapsed">
-            <i class="pi pi-clipboard text-lg"></i>
-            <span *ngIf="!isCollapsed">Resultados</span>
-        </a>
-
-        <div class="px-2 w-full mt-2">
-            <div class="h-px w-full bg-white/20 my-3"></div>
-        </div>
-
-        <div class="px-3 mb-2 text-white/70 text-xs font-semibold uppercase tracking-wider"
-            [ngClass]="isCollapsed ? 'text-center' : ''">
-            <span *ngIf="!isCollapsed">Otros</span>
-            <span *ngIf="isCollapsed">...</span>
-        </div>
-
-        <!-- Menu Items Bottom -->
-        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
-            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Notificaciones" tooltipPosition="right"
-            [tooltipDisabled]="!isCollapsed">
-            <i class="pi pi-bell text-lg"></i>
-            <span *ngIf="!isCollapsed">Notificaciones</span>
-        </a>
-        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
-            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Bandeja de entrada" tooltipPosition="right"
-            [tooltipDisabled]="!isCollapsed">
-            <i class="pi pi-envelope text-lg"></i>
-            <span *ngIf="!isCollapsed">Bandeja de entrada</span>
-        </a>
-        <a class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
-            [ngClass]="isCollapsed ? 'justify-center' : ''" pTooltip="Configuraciones" tooltipPosition="right"
-            [tooltipDisabled]="!isCollapsed">
-            <i class="pi pi-cog text-lg"></i>
-            <span *ngIf="!isCollapsed">Configuraciones</span>
-        </a>
+        @for (item of items; track item.label) {
+            <a [routerLink]="item.routerLink"
+                class="flex items-center gap-4 px-3 py-3 rounded-lg hover:bg-white/20 transition-colors cursor-pointer text-white no-underline text-sm font-medium"
+                [ngClass]="isCollapsed ? 'justify-center' : ''" [pTooltip]="item.label" tooltipPosition="right"
+                [tooltipDisabled]="!isCollapsed">
+                <i [class]="item.icon + ' text-lg'"></i>
+                @if (!isCollapsed) {
+                    <span>{{ item.label }}</span>
+                }
+            </a>
+        }
     </div>
 
     <!-- Bottom Logo -->

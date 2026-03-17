@@ -5,15 +5,28 @@ import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { filter } from 'rxjs/operators';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SidebarItem } from '../../../../models/layout.model';
+import { ITEMS_SIDEBAR_ADMINISTRADOR, ITEMS_SIDEBAR_FARMACIA, ITEMS_SIDEBAR_INVENTARIO, ITEMS_SIDEBAR_LABORATORIO, ITEMS_SIDEBAR_MEDICO } from '../../../../constants/items_sidebar';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterModule, AvatarModule, ButtonModule, TooltipModule],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    AvatarModule, 
+    ButtonModule, 
+    TooltipModule,
+    TranslateModule
+  ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
 export class Sidebar implements OnInit {
+
+  items: SidebarItem[] = [];
+
   isCollapsed = false;
   isVisible = true;
   themeClass = 'from-celeste-fuerte to-celeste-suave';
@@ -22,13 +35,12 @@ export class Sidebar implements OnInit {
   userRoleName = 'Médico';
   rolId = 1;
 
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private translate: TranslateService) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      // Hide on login
       this.isVisible = !event.url.includes('/login') && event.url !== '/';
-      this.checkUser(); // Re-check user when navigating
+      this.checkUser();
     });
   }
 
@@ -36,6 +48,10 @@ export class Sidebar implements OnInit {
     this.checkUser();
     this.checkScreenSize();
     window.addEventListener('resize', this.checkScreenSize.bind(this));
+    
+    this.translate.onLangChange.subscribe(() => {
+        this.checkUser();
+    });
   }
 
   checkScreenSize() {
@@ -55,18 +71,31 @@ export class Sidebar implements OnInit {
         this.rolId = user.rolId || user.rol || 1;
         this.userName = user.nombre || user.name || 'Ben Richard';
         
+        const translationKey = `SIDEBAR.ROLES.${this.rolId}`;
+        const translatedRole = this.translate.instant(translationKey);
+        
         const roles: Record<number, string> = {
-            1: 'Médico',
+            1: 'Administrador',
             2: 'Laboratorio',
-            3: 'Admin',
-            4: 'Paciente',
-            5: 'Soporte'
+            3: 'Medico',
+            4: 'Farmacia',
+            5: 'Inventario'
         };
-        this.userRoleName = user.rolNombre || roles[this.rolId] || 'Médico';
+        
+        this.userRoleName = user.rolNombre || (translatedRole !== translationKey ? translatedRole : roles[this.rolId]) || 'Médico';
       } catch (e) {}
     }
     
     this.themeClass = this.getThemeClass(this.rolId);
+
+    switch (Number(this.rolId)) {
+        case 1: this.items = ITEMS_SIDEBAR_ADMINISTRADOR; break;
+        case 2: this.items = ITEMS_SIDEBAR_LABORATORIO; break;
+        case 3: this.items = ITEMS_SIDEBAR_MEDICO; break;
+        case 4: this.items = ITEMS_SIDEBAR_FARMACIA; break;
+        case 5: this.items = ITEMS_SIDEBAR_INVENTARIO; break;
+        default: this.items = ITEMS_SIDEBAR_ADMINISTRADOR; break;
+    }
   }
 
   getThemeClass(rol: number): string {

@@ -1,0 +1,29 @@
+{
+  "LOGIN": {
+    "WELCOME": "Bienvenido",
+    "SUBTITLE": "Ingresa tus credenciales para iniciar sesión",
+    "USERNAME_OR_EMAIL": "Usuario o correo electrónico",
+    "PASSWORD": "Contraseña",
+    "ENTER": "Ingresar",
+    "REMEMBER_ME": "Recordarme",
+    "FORGOT_PASSWORD": "¿Olvidaste tu contraseña?",
+    "LOGIN_BUTTON": "Iniciar sesión",
+    "HERO_TITLE": "Optimiza la eficiencia de tu laboratorio clínico"
+  },
+  "SIDEBAR": {
+    "PATIENTS": "Pacientes",
+    "ORDERS": "Órdenes",
+    "RESULTS": "Resultados",
+    "OTHERS": "Otros",
+    "NOTIFICATIONS": "Notificaciones",
+    "INBOX": "Bandeja de entrada",
+    "SETTINGS": "Configuraciones",
+    "ROLES": {
+      "1": "Médico",
+      "2": "Laboratorio",
+      "3": "Admin",
+      "4": "Paciente",
+      "5": "Soporte"
+    }
+  }
+}

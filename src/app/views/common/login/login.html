@@ -1,1 +1,84 @@
-<p>login works!</p>
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="bg-white rounded-[2rem] shadow-xl w-full max-w-[1000px] flex overflow-hidden min-h-[600px] p-2">
+      
+      <!-- Left Panel: Graphic (Hidden on mobile, visible on md and up) -->
+      <div class="hidden md:flex md:w-1/2 relative rounded-[1.8rem] overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/90 z-10 mix-blend-multiply"></div>
+          
+          <!-- This image should be replaced with the actual background if provided. Using a placeholder or generic lab image for now. -->
+          <img src="/login/loginimg.jpeg" 
+               alt="Lab background" 
+               class="absolute inset-0 w-full h-full object-cover">
+          
+          <div class="relative z-20 p-10 flex flex-col h-full text-white">
+              <!-- Logo -->
+              <div class="flex items-center gap-2 mb-auto">
+                  <img src="/logo/logo_blanco_transparente.png" alt="Logo" class="w-40">
+              </div>
+              
+              <!-- Text content -->
+              <div class="mt-auto pb-10">
+                  <h1 class="text-4xl font-bold leading-tight mb-4 text-white">
+                      {{ 'LOGIN.HERO_TITLE' | translate }}
+                  </h1>
+              </div>
+
+              <!-- Play Button -->
+              <div class="absolute bottom-8 right-8">
+                  <button class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition shadow-lg border-2 border-white">
+                      <i class="pi pi-play text-white text-xl ml-1"></i>
+                  </button>
+              </div>
+          </div>
+      </div>
+
+      <!-- Right Panel: Form (Full width on mobile, half width on md and up) -->
+      <div class="w-full md:w-1/2 flex items-center justify-center p-8 lg:p-12 relative">
+          
+          <div class="w-full max-w-[380px]">
+              
+              <div class="text-center mb-10">
+                  <h2 class="text-3xl font-bold text-gray-600 mb-2">{{ 'LOGIN.WELCOME' | translate }}</h2>
+                  <p class="text-gray-500 text-sm">{{ 'LOGIN.SUBTITLE' | translate }}</p>
+              </div>
+
+              <form [formGroup]="userform" class="flex flex-col gap-5">
+                  
+                  <!-- Email Input -->
+                  <div class="flex flex-col gap-2">
+                      <p-floatlabel variant="on">
+                          <input class="w-full" pInputText id="on_label" [formControl]="userform.controls.username" autocomplete="off" />
+                          <label for="on_label">{{ 'LOGIN.USERNAME_OR_EMAIL' | translate }}</label>
+                      </p-floatlabel>
+                  </div>
+
+                  <!-- Password Input -->
+                  <div class="flex">
+                    <p-floatlabel variant="on" class="w-full">
+                        <p-password class="flex w-full" inputStyleClass="w-full" [formControl]="userform.controls.password" [toggleMask]="true" [feedback]="false" />
+                        <label for="on_label">{{ 'LOGIN.PASSWORD' | translate }}</label>
+                    </p-floatlabel>
+                  </div>
+
+                  <!-- Options -->
+                  <div class="flex items-center justify-between mt-1 text-sm">
+                      <label class="flex items-center gap-2 cursor-pointer">
+                          <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-gray-400 focus:ring-gray-400">
+                          <span class="text-gray-500 text-xs">{{ 'LOGIN.REMEMBER_ME' | translate }}</span>
+                      </label>
+                      <a href="#" class="text-primary hover:underline text-xs">{{ 'LOGIN.FORGOT_PASSWORD' | translate }}</a>
+                  </div>
+
+                  <!-- Login Button -->
+                  <p-button [label]="'LOGIN.LOGIN_BUTTON' | translate" 
+                            (click)="agregarUsuarioInvitado()"
+                            severity="primary"
+                            class="w-full block" 
+                            styleClass="w-full mt-4 py-3 px-4 font-medium rounded-lg text-sm"></p-button>
+
+              </form>
+          </div>
+      </div>
+      
+  </div>
+</div>

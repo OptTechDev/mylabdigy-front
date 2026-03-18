@@ -25,5 +25,22 @@
       "4": "Paciente",
       "5": "Soporte"
     }
-  }
+  },
+  "labs": {
+        "title": "Clientes",
+        "subtitle": "Listado de clientes | Laboratorio",
+        "search_placeholder": "Buscar por nombre o documento",
+        "create_button": "Crear un Cliente",
+        "column_id": "Código",
+        "column_name": "Nombre Comercial",
+        "column_type": "Tipo",
+        "column_plan": "Plan",
+        "column_date": "Fecha de ingreso",
+        "column_status": "Estado",
+        "column_actions": "Acciones",
+        "results_per_page": "Resultados por página",
+        "Activo": "Activo",
+        "Inactivo": "Inactivo",
+        "actions_tooltip": "Más opciones"
+    }
 }

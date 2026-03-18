@@ -4,6 +4,7 @@ import { Conexiones } from './views/middleware/conexiones/conexiones';
 import { Ordenes as OrdenesLab } from './views/laboratorio/ordenes/ordenes';
 import { Ordenes as OrdenesMed } from './views/medico/ordenes/ordenes';
 import { Pacientes } from './views/medico/pacientes/pacientes';
+import { LabsManagementComponent } from './components/labs-management/labs-management.component';
 
 export const routes: Routes = [
     {
@@ -34,4 +35,8 @@ export const routes: Routes = [
         path: 'medico/pacientes',
         component: Pacientes
     },   
+    { 
+        path: 'labs', 
+        component: LabsManagementComponent 
+    },
 ];

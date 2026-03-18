@@ -1,0 +1,85 @@
+<div class="card p-4 shadow-1 surface-card border-round-xl">
+    <div class="flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="m-0 text-3xl font-bold text-900">{{ 'labs.title' | translate }}</h1>
+            <p class="m-0 text-600 mt-1">{{ 'labs.subtitle' | translate }}</p>
+        </div>
+        <p-button 
+            label="{{ 'labs.create_button' | translate }}" 
+            icon="pi pi-plus" 
+            styleClass="p-button-primary border-round-lg px-4 py-2 text-sm">
+        </p-button>
+    </div>
+
+    <div class="flex mb-4">
+        <span class="p-input-icon-left w-full md:w-30rem">
+            <i class="pi pi-search text-400"></i>
+            <input 
+                type="text" 
+                pInputText 
+                [(ngModel)]="searchQuery"
+                placeholder="{{ 'labs.search_placeholder' | translate }}" 
+                class="w-full border-round-lg text-sm bg-50 p-inputtext-sm" />
+        </span>
+    </div>
+
+    <p-table 
+        [value]="laboratorios" 
+        [paginator]="true" 
+        [rows]="8" 
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="{{ 'labs.results_per_page' | translate }}"
+        [rowsPerPageOptions]="[8, 16, 24]"
+        responsiveLayout="scroll"
+        styleClass="p-datatable-striped p-datatable-sm" 
+        class="text-sm">
+        
+        <ng-template pTemplate="header">
+            <tr class="text-xs text-500 uppercase">
+                <th pSortableColumn="id" class="pl-4">{{ 'labs.column_id' | translate }} <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="nombre">{{ 'labs.column_name' | translate }} <p-sortIcon field="nombre"></p-sortIcon></th>
+                <th pSortableColumn="tipo">{{ 'labs.column_type' | translate }} <p-sortIcon field="tipo"></p-sortIcon></th>
+                <th pSortableColumn="plan">{{ 'labs.column_plan' | translate }} <p-sortIcon field="plan"></p-sortIcon></th>
+                <th pSortableColumn="fechaIngreso">{{ 'labs.column_date' | translate }} <p-sortIcon field="fechaIngreso"></p-sortIcon></th>
+                <th class="text-center">{{ 'labs.column_status' | translate }}</th>
+                <th class="text-center pr-4">{{ 'labs.column_actions' | translate }}</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-lab>
+            <tr class="text-800 border-y-1 border-100">
+                <td class="pl-4 py-3">{{ lab.id }}</td>
+                <td>{{ lab.nombre }}</td>
+                <td>{{ lab.tipo }}</td>
+                <td>{{ lab.plan }}</td>
+                <td>{{ lab.fechaIngreso }}</td>
+                <td class="text-center">
+                    <p-tag 
+                        [value]="lab.estado | translate" 
+                        [severity]="lab.estado === 'Activo' ? 'success' : 'danger'" 
+                        [rounded]="true"
+                        class="text-xs font-semibold px-2">
+                    </p-tag>
+                </td>
+                <td class="text-center pr-4">
+                    <p-button 
+                        icon="pi pi-ellipsis-v" 
+                        styleClass="p-button-rounded p-button-text p-button-plain p-button-sm"
+                        [pTooltip]="'labs.actions_tooltip' | translate"
+                        tooltipPosition="left">
+                    </p-button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="paginatorleft">
+            <div class="flex align-items-center gap-2 text-sm text-600">
+                <span>{{ 'labs.results_per_page' | translate }}</span>
+                </div>
+        </ng-template>
+        
+        <ng-template pTemplate="paginatorright">
+            </ng-template>
+
+    </p-table>
+</div>

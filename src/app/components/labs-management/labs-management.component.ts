@@ -8,6 +8,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PaginatorModule } from 'primeng/paginator';
 import { TranslateModule } from '@ngx-translate/core';
 import { TooltipModule } from 'primeng/tooltip';
+import { DatePickerModule } from 'primeng/datepicker'; // Antes era calendar
+import { SelectModule } from 'primeng/select';         // Antes era dropdown
+import { DialogModule } from 'primeng/dialog';
+
+import { MOCK_LABS } from '../../constants/labs.constants';
 
 // Definimos la estructura aquí mismo para no complicarnos por ahora
 export interface Laboratory {
@@ -33,30 +38,37 @@ export interface Laboratory {
     PaginatorModule,
     // Traducción
     TranslateModule,
-    TooltipModule
+    TooltipModule,
+    DatePickerModule, // Cambiado
+    SelectModule,     // Cambiado
+    DialogModule
   ],
   templateUrl: './labs-management.component.html',
   styleUrl: './labs-management.component.css'
 })
+
 export class LabsManagementComponent {
-  // Variable para el buscador
   searchQuery: string = '';
 
-  // --- DATOS DE PRUEBA (MOCK DATA) idénticos al mockup ---
-  // He creado 12 registros para que funcione la paginación (8 por página)
-  laboratorios: Laboratory[] = [
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    { id: '20231003001', nombre: 'Zaleth David Ríos Mata', tipo: 'Medicina Interna', plan: 'Centro Patológico del Caribe', fechaIngreso: '03/10/2023', estado: 'Activo' },
-    // Filas extras para la página 2
-    { id: '20231003002', nombre: 'Laboratorio de Prueba 2', tipo: 'Análisis Clínicos', plan: 'Plan Básico', fechaIngreso: '04/10/2023', estado: 'Inactivo' },
-    { id: '20231003003', nombre: 'Clínica Alemana', tipo: 'Cardiología', plan: 'Plan Premium', fechaIngreso: '05/10/2023', estado: 'Activo' },
-    { id: '20231003003', nombre: 'Clínica Alemana', tipo: 'Cardiología', plan: 'Plan Premium', fechaIngreso: '05/10/2023', estado: 'Activo' },
-    { id: '20231003003', nombre: 'Clínica Alemana', tipo: 'Cardiología', plan: 'Plan Premium', fechaIngreso: '05/10/2023', estado: 'Activo' },
+  // Ahora solo llamamos a nuestra "cocina" de datos
+  laboratorios: Laboratory[] = MOCK_LABS;
+
+  visible: boolean = false;
+  
+  nuevoLab: any = {
+    nombre: '',
+    plan: null,
+    vencimiento: null
+  };
+
+  // En 'Select', las opciones se manejan igual, pero el componente en el HTML cambia
+  planes = [
+    { label: 'Basic', value: 'Basic' },
+    { label: 'Standard', value: 'Standard' },
+    { label: 'Premium', value: 'Premium' }
   ];
+
+  showDialog() {
+    this.visible = true;
+  }
 }

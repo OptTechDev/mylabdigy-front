@@ -5,6 +5,7 @@
             <p class="m-0 text-600 mt-1">{{ 'labs.subtitle' | translate }}</p>
         </div>
         <p-button 
+            (click)="showDialog()"
             label="{{ 'labs.create_button' | translate }}" 
             icon="pi pi-plus" 
             styleClass="p-button-primary border-round-lg px-4 py-2 text-sm">
@@ -83,3 +84,55 @@
 
     </p-table>
 </div>
+
+<p-dialog 
+    header="{{ 'labs.create_title' | translate }}" 
+    [(visible)]="visible" 
+    [modal]="true" 
+    [style]="{ width: '450px' }" 
+    [draggable]="false" 
+    [resizable]="false">
+    
+    <div class="flex flex-column gap-3 mt-2">
+        <div class="flex flex-column gap-2">
+            <label for="nombre">{{ 'labs.column_name' | translate }}</label>
+            <input pInputText id="nombre" [(ngModel)]="nuevoLab.nombre" class="w-full" />
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <label for="plan">{{ 'labs.column_plan' | translate }}</label>
+            <p-select 
+                [options]="planes" 
+                [(ngModel)]="nuevoLab.plan" 
+                optionLabel="label" 
+                placeholder="Seleccione un plan" 
+                class="w-full">
+            </p-select>
+        </div>
+
+        <div class="flex flex-column gap-2">
+            <label for="vencimiento">{{ 'labs.column_expiry' | translate }}</label>
+            <p-datepicker 
+                [(ngModel)]="nuevoLab.vencimiento" 
+                dateFormat="dd/mm/yy" 
+                [showIcon]="true" 
+                class="w-full">
+            </p-datepicker>
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button 
+            label="Cancelar" 
+            icon="pi pi-times" 
+            (click)="visible = false" 
+            styleClass="p-button-text">
+        </p-button>
+        <p-button 
+            label="Guardar" 
+            icon="pi pi-check" 
+            (click)="visible = false" 
+            styleClass="p-button-primary">
+        </p-button>
+    </ng-template>
+</p-dialog>

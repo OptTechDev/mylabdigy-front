@@ -1,0 +1,72 @@
+/* Contenedor principal estilo Grid */
+.contenedor-creacion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Columna Izquierda (Resumen) - 25% de ancho aprox */
+.columna-resumen {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+}
+
+/* Columna Derecha (Stepper) - El resto del espacio */
+.columna-stepper {
+    flex: 3;
+    min-width: 350px;
+}
+
+/* Forzar orden vertical en el resumen */
+.resumen-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Estilo para las filas del resumen */
+.resumen-item {
+    display: flex;
+    flex-direction: column; /* Etiqueta arriba, valor abajo */
+    gap: 4px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.resumen-label {
+    color: #64748b;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.resumen-value {
+    color: #1e293b;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Ajuste para los campos del formulario (3 por fila) */
+.form-grid-custom {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+.contenedor-creacion {
+    display: flex; /* Esto es lo que los pone uno al lado del otro */
+    flex-direction: row; 
+    flex-wrap: nowrap; /* Evita que el stepper se baje */
+    gap: 20px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.columna-resumen {
+    flex: 0 0 300px; /* Ancho fijo de 300px para que no baile */
+}
+
+.columna-stepper {
+    flex: 1; /* Que use todo el resto del espacio */
+    min-width: 0; /* Evita que el contenido interno lo ensanche de más */
+}

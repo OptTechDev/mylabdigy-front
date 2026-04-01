@@ -1,4 +1,4 @@
-<div class="card p-4 shadow-1 surface-card border-round-xl">
+<div class="card p-4 shadow-1 surface-card border-round-xl" *ngIf="!visible">
     <div class="flex justify-content-between align-items-center mb-5">
         <div>
             <h1 class="m-0 text-3xl font-bold text-900">{{ 'labs.title' | translate }}</h1>
@@ -85,54 +85,184 @@
     </p-table>
 </div>
 
-<p-dialog 
-    header="{{ 'labs.create_title' | translate }}" 
-    [(visible)]="visible" 
-    [modal]="true" 
-    [style]="{ width: '450px' }" 
-    [draggable]="false" 
-    [resizable]="false">
-    
-    <div class="flex flex-column gap-3 mt-2">
-        <div class="flex flex-column gap-2">
-            <label for="nombre">{{ 'labs.column_name' | translate }}</label>
-            <input pInputText id="nombre" [(ngModel)]="nuevoLab.nombre" class="w-full" />
-        </div>
+<div class="contenedor-creacion" *ngIf="visible">
 
-        <div class="flex flex-column gap-2">
-            <label for="plan">{{ 'labs.column_plan' | translate }}</label>
-            <p-select 
-                [options]="planes" 
-                [(ngModel)]="nuevoLab.plan" 
-                optionLabel="label" 
-                placeholder="Seleccione un plan" 
-                class="w-full">
-            </p-select>
-        </div>
+</div>
 
-        <div class="flex flex-column gap-2">
-            <label for="vencimiento">{{ 'labs.column_expiry' | translate }}</label>
-            <p-datepicker 
-                [(ngModel)]="nuevoLab.vencimiento" 
-                dateFormat="dd/mm/yy" 
-                [showIcon]="true" 
-                class="w-full">
-            </p-datepicker>
-        </div>
+<div class="p-4" *ngIf="visible">
+    <div class="flex align-items-center mb-4 text-primary cursor-pointer" (click)="visible = false">
+        <i class="pi pi-arrow-left mr-2"></i>
+        <h2 class="m-0 font-bold">Nuevo Tenant</h2>
     </div>
 
-    <ng-template pTemplate="footer">
-        <p-button 
-            label="Cancelar" 
-            icon="pi pi-times" 
-            (click)="visible = false" 
-            styleClass="p-button-text">
-        </p-button>
-        <p-button 
-            label="Guardar" 
-            icon="pi pi-check" 
-            (click)="visible = false" 
-            styleClass="p-button-primary">
-        </p-button>
-    </ng-template>
-</p-dialog>
+    <div class="grid">
+        
+        <div class="columna-resumen">
+            <div class="card shadow-1 border-round-xl p-4 bg-white">
+                <h3 class="text-primary font-bold mb-4 mt-0">Resumen y creacion</h3>
+                
+                <div class="resumen-lista">
+                    <div class="p-input-icon-left w-full">
+                        <i class="pi pi-search"></i>
+                        <input type="text" pInputText placeholder="Buscar..." class="w-full p-inputtext-sm" />
+                    </div>
+
+                    <div class="resumen-item">
+                        <span class="resumen-label">TenantKey + URL sugerida:</span>
+                        <span class="resumen-value">{{ tenantData.business.tenantKey || '--' }}</span>
+                        <small class="text-primary italic" *ngIf="tenantData.business.tenantKey">
+                            {{ tenantData.business.tenantKey }}.milabdigital.com
+                        </small>
+                    </div>
+
+                    <div class="resumen-item">
+                        <span class="resumen-label">Datos del negocio:</span>
+                        <span class="resumen-value">{{ tenantData.business.name || '--' }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="columna-stepper">
+            <div class="card shadow-1 border-round-xl p-4 bg-white">
+            <div class="flex align-items-center mb-4 text-primary cursor-pointer" (click)="visible = false">
+                <i class="pi pi-arrow-left mr-2"></i>
+                <h2 class="m-0 font-bold">Nuevo Tenant</h2>
+            </div>
+
+            <p-stepper [(value)]="activeStep">
+                
+                <p-step-list class="mb-5 border-bottom-1 surface-border pb-3">
+                    <p-step [value]="1">Datos de negocio</p-step>
+                    <p-step [value]="2">Subscripcion plan</p-step>
+                    <p-step [value]="3">Administrador Tenant</p-step>
+                    <p-step [value]="4">Sucursal Principal</p-step>
+                </p-step-list>
+
+                <p-step-panels>
+
+                    <p-step-panel [value]="1">
+                        <ng-template pTemplate="content" let-nextCallback="nextCallback">
+                            <h3 class="text-primary mt-0 mb-4">Datos de negocio</h3>
+                            <div class="form-grid-custom p-fluid">
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Tenant Key</label>
+                                    <input pInputText [(ngModel)]="tenantData.business.tenantKey" placeholder="min 3 a 35 max" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Nombre comercial</label>
+                                    <input pInputText [(ngModel)]="tenantData.business.name" placeholder="nombre-comercial" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Razón social</label>
+                                    <p-select [options]="[]" placeholder="Seleccionar" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">País</label>
+                                    <input pInputText [(ngModel)]="tenantData.business.country" placeholder="país" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Zona Horaria</label>
+                                    <input pInputText [(ngModel)]="tenantData.business.timezone" placeholder="zona horaria" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Moneda</label>
+                                    <p-select [options]="[]" placeholder="Seleccionar" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                            </div>
+                            <div class="flex pt-4 justify-content-end">
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (click)="nextCallback.emit()" styleClass="p-button-sm border-round-lg px-4"></p-button>
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+
+                    <p-step-panel [value]="2">
+                        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+                            <h3 class="text-primary mt-0 mb-4">Subscripcion plan</h3>
+                            <div class="form-grid-custom p-fluid">
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Periodicidad</label>
+                                    <p-select [options]="periodicities" [(ngModel)]="tenantData.subscription.periodicity" placeholder="mensual/anual" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Inicio</label>
+                                    <p-datepicker [(ngModel)]="tenantData.subscription.startDate" [showIcon]="true" styleClass="p-inputtext-sm border-round-lg"></p-datepicker>
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Plan</label>
+                                    <p-select [options]="planes" [(ngModel)]="tenantData.subscription.plan" placeholder="Seleccionar" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Estado de subscripción</label>
+                                    <p-select [options]="subscriptionStatuses" [(ngModel)]="tenantData.subscription.status" placeholder="Seleccionar" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Estado del Tenant (Nota)</label>
+                                    <p-select [options]="tenantStatuses" [(ngModel)]="tenantData.subscription.tenantStatus" placeholder="Seleccionar" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                            </div>
+                            <div class="flex pt-4 justify-content-between">
+                                <p-button label="Atrás" icon="pi pi-arrow-left" (click)="prevCallback()" styleClass="p-button-text p-button-plain p-button-sm"></p-button>
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (click)="nextCallback.emit()" styleClass="p-button-sm border-round-lg px-4"></p-button>
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+
+                    <p-step-panel [value]="3">
+                        <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback">
+                            <h3 class="text-primary mt-0 mb-4">Administrador del tenant</h3>
+                            <div class="form-grid-custom p-fluid">
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Nombres</label>
+                                    <input pInputText [(ngModel)]="tenantData.admin.names" placeholder="nombres" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Apellidos</label>
+                                    <input pInputText [(ngModel)]="tenantData.admin.lastnames" placeholder="apellidos" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Correo electrónico</label>
+                                    <p-select [options]="[]" placeholder="Seleccionar" styleClass="p-inputtext-sm border-round-lg"></p-select>
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Teléfono</label>
+                                    <input pInputText [(ngModel)]="tenantData.admin.phone" placeholder="teléfono" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                            </div>
+                            <div class="flex pt-4 justify-content-between">
+                                <p-button label="Atrás" icon="pi pi-arrow-left" (click)="prevCallback()" styleClass="p-button-text p-button-plain p-button-sm"></p-button>
+                                <p-button label="Siguiente" icon="pi pi-arrow-right" iconPos="right" (click)="nextCallback.emit()" styleClass="p-button-sm border-round-lg px-4"></p-button>
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+
+                    <p-step-panel [value]="4">
+                        <ng-template pTemplate="content" let-prevCallback="prevCallback">
+                            <h3 class="text-primary mt-0 mb-4">Sucursal Principal</h3>
+                            <div class="flex align-items-center gap-2 mb-4">
+                                <p-checkbox [(ngModel)]="tenantData.branch.useBusinessAddress" [binary]="true" id="checkAddr"></p-checkbox>
+                                <label for="checkAddr" class="text-sm font-medium">Usar dirección del negocio</label>
+                            </div>
+                            <div class="form-grid-custom p-fluid">
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Nombre de sucursal</label>
+                                    <input pInputText [(ngModel)]="tenantData.branch.name" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                                <div class="field">
+                                    <label class="font-bold mb-1 block">Ciudad</label>
+                                    <input pInputText [(ngModel)]="tenantData.branch.city" class="p-inputtext-sm border-round-lg" />
+                                </div>
+                            </div>
+                            <div class="flex pt-4 justify-content-between">
+                                <p-button label="Atrás" icon="pi pi-arrow-left" (click)="prevCallback()" styleClass="p-button-text p-button-plain p-button-sm"></p-button>
+                                <p-button label="Finalizar" icon="pi pi-check" severity="success" (click)="visible = false" styleClass="p-button-sm border-round-lg px-4"></p-button>
+                            </div>
+                        </ng-template>
+                    </p-step-panel>
+
+                </p-step-panels>
+            </p-stepper>
+        </div>
+        </div>
+    </div>
+</div>

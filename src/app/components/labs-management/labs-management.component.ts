@@ -13,6 +13,8 @@ import { SelectModule } from 'primeng/select';
 import { StepperModule } from 'primeng/stepper';
 import { CheckboxModule } from 'primeng/checkbox';         // Antes era dropdown
 import { DialogModule } from 'primeng/dialog';
+import { MenuModule } from 'primeng/menu'; // Agrega a tus imports del @Component
+import { MenuItem } from 'primeng/api';
 
 import { MOCK_LABS } from '../../constants/labs.constants';
 
@@ -45,7 +47,8 @@ export interface Laboratory {
     SelectModule,     // Cambiado
     DialogModule,
     StepperModule,
-    CheckboxModule
+    CheckboxModule,
+    MenuModule
   ],
   templateUrl: './labs-management.component.html',
   styleUrl: './labs-management.component.css'
@@ -110,4 +113,14 @@ export class LabsManagementComponent {
     { label: 'Moroso', value: 'moroso' },
     { label: 'Cancelado', value: 'cancelado' }
   ];
+
+  accionesItems: MenuItem[] = [
+  { label: 'Ver Detalle', icon: 'pi pi-user' },
+  { label: 'Suspender/Bloquear', icon: 'pi pi-info-circle' },
+  { label: 'Reactivar tenant', icon: 'pi pi-power-off' },
+  { label: 'Extender Trial / Ajustar Trial', icon: 'pi pi-power-off' },
+  { label: 'Forzar fin de trial', icon: 'pi pi-power-off' },
+  { label: 'Cambiar Plan', icon: 'pi pi-power-off' },
+  { label: 'Reset acceso admin', icon: 'pi pi-power-off' }
+];
 }

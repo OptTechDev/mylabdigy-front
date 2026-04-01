@@ -1,4 +1,6 @@
 <div class="card p-4 shadow-1 surface-card border-round-xl" *ngIf="!visible">
+    <p-menu #menu [model]="accionesItems" [popup]="true" appendTo="body"></p-menu>
+
     <div class="flex justify-content-between align-items-center mb-5">
         <div>
             <h1 class="m-0 text-3xl font-bold text-900">{{ 'labs.title' | translate }}</h1>
@@ -67,7 +69,8 @@
                         icon="pi pi-ellipsis-v" 
                         styleClass="p-button-rounded p-button-text p-button-plain p-button-sm"
                         [pTooltip]="'labs.actions_tooltip' | translate"
-                        tooltipPosition="left">
+                        tooltipPosition="left"
+                        (click)="menu.toggle($event)">
                     </p-button>
                 </td>
             </tr>
@@ -76,18 +79,13 @@
         <ng-template pTemplate="paginatorleft">
             <div class="flex align-items-center gap-2 text-sm text-600">
                 <span>{{ 'labs.results_per_page' | translate }}</span>
-                </div>
+            </div>
         </ng-template>
         
-        <ng-template pTemplate="paginatorright">
-            </ng-template>
-
+        <ng-template pTemplate="paginatorright"></ng-template>
     </p-table>
 </div>
 
-<div class="contenedor-creacion" *ngIf="visible">
-
-</div>
 
 <div class="p-4" *ngIf="visible">
     <div class="flex align-items-center mb-4 text-primary cursor-pointer" (click)="visible = false">

@@ -41,6 +41,7 @@
         "results_per_page": "Resultados por página",
         "Activo": "Activo",
         "Inactivo": "Inactivo",
-        "actions_tooltip": "Más opciones"
+        "actions_tooltip": "Más opciones",
+        "create_title": "Registrar Nuevo Laboratorio"
     }
 }

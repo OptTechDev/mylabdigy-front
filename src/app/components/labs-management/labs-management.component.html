@@ -94,40 +94,7 @@
     </div>
 
     <div class="grid">
-        
-        <div class="columna-resumen">
-            <div class="card shadow-1 border-round-xl p-4 bg-white">
-                <h3 class="text-primary font-bold mb-4 mt-0">Resumen y creacion</h3>
-                
-                <div class="resumen-lista">
-                    <div class="p-input-icon-left w-full">
-                        <i class="pi pi-search"></i>
-                        <input type="text" pInputText placeholder="Buscar..." class="w-full p-inputtext-sm" />
-                    </div>
-
-                    <div class="resumen-item">
-                        <span class="resumen-label">TenantKey + URL sugerida:</span>
-                        <span class="resumen-value">{{ tenantData.business.tenantKey || '--' }}</span>
-                        <small class="text-primary italic" *ngIf="tenantData.business.tenantKey">
-                            {{ tenantData.business.tenantKey }}.milabdigital.com
-                        </small>
-                    </div>
-
-                    <div class="resumen-item">
-                        <span class="resumen-label">Datos del negocio:</span>
-                        <span class="resumen-value">{{ tenantData.business.name || '--' }}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="columna-stepper">
-            <div class="card shadow-1 border-round-xl p-4 bg-white">
-            <div class="flex align-items-center mb-4 text-primary cursor-pointer" (click)="visible = false">
-                <i class="pi pi-arrow-left mr-2"></i>
-                <h2 class="m-0 font-bold">Nuevo Tenant</h2>
-            </div>
-
+        <div class="card shadow-1 border-round-xl p-4 bg-white">
             <p-stepper [(value)]="activeStep">
                 
                 <p-step-list class="mb-5 border-bottom-1 surface-border pb-3">
@@ -260,7 +227,6 @@
 
                 </p-step-panels>
             </p-stepper>
-        </div>
         </div>
     </div>
 </div>

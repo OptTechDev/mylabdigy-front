@@ -125,3 +125,8 @@ body .p-button.p-button-secondary {
     border-color: var(--color-success-400);
     @apply hover:bg-success-500 hover:border-success-500;
 }
+
+::ng-deep .p-dialog-header {
+    background-color: #3ba3d1 !important; /* El color de tu imagen */
+    color: white !important;
+}
